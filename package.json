@@ -1,6 +1,6 @@
 {
   "name": "opencode-webhook",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A lightweight, asynchronous webhook plugin for OpenCode that sends events to a configured webhook endpoint.",
   "main": "index.js",
   "type": "module",
