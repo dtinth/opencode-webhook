@@ -1,29 +1,31 @@
 # OpenCode Webhook Plugin
 
-A lightweight, asynchronous webhook plugin for OpenCode that sends all OpenCode events to a configured webhook endpoint. This plugin is written in plain JavaScript with no dependencies.
+A lightweight, asynchronous webhook plugin for OpenCode that sends all OpenCode events to a configured webhook endpoint. This plugin is written in plain JavaScript with no dependencies, so you can easily
 
 ## Setting up
 
-**Install the plugin:**
+**Install the plugin:** You can install the plugin from npm or install from source.
 
-Add `opencode-webhook` to your `opencode.json` configuration file:
+- Using npm: Add `opencode-webhook` to your `opencode.json` configuration file:
 
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugin": ["opencode-webhook"]
-}
-```
+  ```json
+  {
+    "$schema": "https://opencode.ai/config.json",
+    "plugin": ["opencode-webhook"]
+  }
+  ```
+
+- From source: Just symlink `index.js` into your OpenCode plugins directory:
+
+  ```sh
+  ln -s $PWD/index.js ~/.config/opencode/plugins/webhook.js
+  ```
 
 **Configure the plugin** at `~/.opencode-webhook/config.json`:
 
 ```sh
 mkdir -p ~/.opencode-webhook
-echo '{
-  "webhook_url": "https://your-webhook-endpoint.com/events",
-  "enabled": true,
-  "timeout": 60
-}' > ~/.opencode-webhook/config.json
+cp config.example.json > ~/.opencode-webhook/config.json
 ```
 
 ### Configuration Options
@@ -32,20 +34,34 @@ echo '{
 - `enabled` (optional): Set to `false` to disable webhook sending (default: `true`).
 - `timeout` (optional): Timeout for fetch requests in seconds (default: `60`).
 
-## How it works
-
-The plugin hooks into the `event` system of OpenCode. Whenever an event occurs, it sends a `POST` request to your configured `webhook_url` with the following JSON body:
+## Example Request Body
 
 ```json
 {
-  "timestamp": "2026-01-28T12:00:00.000Z",
+  "timestamp": "2026-01-28T06:37:56.405Z",
+  "directory": "/config/scribeditor",
+  "worktree": "/config/scribeditor",
   "event": {
-    "type": "session.idle",
-    ...
+    "type": "message.updated",
+    "properties": {
+      "info": {
+        "id": "msg_c0352a08c001aJRZpIAkSFTWEg",
+        "sessionID": "ses_3fcad5f2dffeVNtndVUM3U0N9O",
+        "role": "user",
+        "time": {
+          "created": 1769582272863
+        },
+        "summary": {
+          "title": "Autoscroll while video plays implementation",
+          "diffs": []
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "opencode",
+          "modelID": "big-pickle"
+        }
+      }
+    }
   }
 }
 ```
-
-## Security
-
-This plugin uses native `fetch` and built-in Node.js/Bun modules. It does not have any external dependencies, making it easy to audit.
