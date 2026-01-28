@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dtinth/opencode-webhook"
+    "url": "git+https://github.com/dtinth/opencode-webhook.git"
   },
   "dependencies": {},
   "files": [
