@@ -25,7 +25,7 @@ A lightweight, asynchronous webhook plugin for OpenCode that sends all OpenCode 
 
 ```sh
 mkdir -p ~/.opencode-webhook
-cp config.example.json > ~/.opencode-webhook/config.json
+cp config.example.json ~/.opencode-webhook/config.json
 ```
 
 ### Configuration Options
